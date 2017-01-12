@@ -56,7 +56,7 @@
     login_port: "{{ mongodb_login_port|default(27017) }}"
     login_host: "{{ mongodb_login_host|default('localhost') }}"
   with_items:
-    - "{{ mongodb_users | default([]) }}"
+    - "{{ mongodb_users[env] | default([]) }}"
   when: ( mongodb_replication_replset
         and mongodb_replication_replset != ''
         and mongodb_security_authorization == 'enabled'
@@ -75,7 +75,7 @@
     login_password: "{{ mongodb_user_admin_password }}"
     login_port: "{{ mongodb_net_port }}"
   with_items:
-    - "{{ mongodb_users | default([]) }}"
+    - "{{ mongodb_users[env] | default([]) }}"
   when: ( mongodb_security_authorization == 'enabled'
           and (not mongodb_replication_replset
           or mongodb_replication_replset == '') )
